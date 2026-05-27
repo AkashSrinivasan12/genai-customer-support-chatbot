@@ -1,0 +1,102 @@
+[
+  {
+    "id": "doc_001",
+    "doctor": "Dr. Smith",
+    "department": "Optometry",
+    "metric": "Patient Wait Time",
+    "value": "12 minutes",
+    "trend": "down 18% from last month",
+    "period": "May 2026",
+    "notes": "Improvement driven by updated scheduling model reducing exam slots from 30min to 20min average."
+  },
+  {
+    "id": "doc_002",
+    "doctor": "Dr. Smith",
+    "department": "Optometry",
+    "metric": "Exams Completed",
+    "value": "142 exams",
+    "trend": "up 12% from last month",
+    "period": "May 2026",
+    "notes": "Higher throughput from same-day availability forecasting system."
+  },
+  {
+    "id": "doc_003",
+    "doctor": "Dr. Johnson",
+    "department": "Pediatric Optometry",
+    "metric": "Patient Wait Time",
+    "value": "18 minutes",
+    "trend": "up 5% from last month",
+    "period": "May 2026",
+    "notes": "Slight increase due to complex pediatric cases requiring extended consultation."
+  },
+  {
+    "id": "doc_004",
+    "doctor": "Dr. Johnson",
+    "department": "Pediatric Optometry",
+    "metric": "Exams Completed",
+    "value": "98 exams",
+    "trend": "stable",
+    "period": "May 2026",
+    "notes": "Consistent throughput maintained despite increased case complexity."
+  },
+  {
+    "id": "doc_005",
+    "doctor": "Dr. Patel",
+    "department": "Contact Lens",
+    "metric": "Patient Satisfaction Score",
+    "value": "4.7/5.0",
+    "trend": "up 0.3 from last quarter",
+    "period": "May 2026",
+    "notes": "Highest satisfaction score across all departments this quarter."
+  },
+  {
+    "id": "doc_006",
+    "doctor": "Dr. Patel",
+    "department": "Contact Lens",
+    "metric": "No-Show Rate",
+    "value": "6.2%",
+    "trend": "down 2.1% from last month",
+    "period": "May 2026",
+    "notes": "Automated reminder system contributed to no-show reduction."
+  },
+  {
+    "id": "doc_007",
+    "doctor": "Dr. Lee",
+    "department": "Glaucoma Specialist",
+    "metric": "Follow-Up Compliance Rate",
+    "value": "82%",
+    "trend": "up 7% from last quarter",
+    "period": "May 2026",
+    "notes": "Patient outreach automation improved follow-up scheduling compliance."
+  },
+  {
+    "id": "doc_008",
+    "doctor": "Dr. Lee",
+    "department": "Glaucoma Specialist",
+    "metric": "Average Revenue Per Exam",
+    "value": "$245",
+    "trend": "up 11% from last quarter",
+    "period": "May 2026",
+    "notes": "Higher revenue per exam due to increased diagnostic procedure utilization."
+  },
+  {
+    "id": "doc_009",
+    "doctor": "All Doctors",
+    "department": "Clinic-Wide",
+    "metric": "Total Monthly Revenue",
+    "value": "$187,400",
+    "trend": "up 9% from last month",
+    "period": "May 2026",
+    "notes": "Strong growth driven by same-day availability and reduced cancellations."
+  },
+  {
+    "id": "doc_010",
+    "doctor": "All Doctors",
+    "department": "Clinic-Wide",
+    "metric": "Appointment Utilization Rate",
+    "value": "91%",
+    "trend": "up 4% from last month",
+    "period": "May 2026",
+    "notes": "Forecasting model reduced empty slots by optimizing daily appointment distribution."
+  }
+]

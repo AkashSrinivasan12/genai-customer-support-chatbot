@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>GenAI Chatbot — Akash Srinivasan</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600&family=IM+Fell+English:ital@0;1&display=swap');
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --gold:#c9a84c;--gold-light:#e8d08a;--ink:#0b0d14;
+  --parchment:#e8d5b0;--mist:rgba(200,210,220,0.06);
+  --crimson:#8b1a1a;--fog:#a8b8c8;
+}
+body{background:var(--ink);color:var(--parchment);font-family:'IM Fell English',Georgia,serif;min-height:100vh;overflow-x:hidden}
+canvas{position:fixed;top:0;left:0;z-index:0;pointer-events:none}
+.fog-layer{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;background:radial-gradient(ellipse 80% 60% at 50% 0%,rgba(180,160,120,0.04) 0%,transparent 70%);pointer-events:none}
+.container{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:70px 28px 100px}
+
+.mon{font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.22em;color:var(--gold);text-transform:uppercase;margin-bottom:32px;opacity:0;animation:fadeUp 1s 0.2s forwards}
+.mon::before{content:'⊕  ';opacity:0.5}
+
+.kanji-accent{font-size:72px;color:rgba(201,168,76,0.06);position:absolute;top:40px;right:28px;font-family:'Cinzel',serif;letter-spacing:-0.05em;user-select:none;pointer-events:none;line-height:1}
+
+h1{font-family:'Cinzel',serif;font-size:clamp(28px,5vw,52px);font-weight:600;line-height:1.1;letter-spacing:0.04em;color:var(--parchment);margin-bottom:6px;opacity:0;animation:fadeUp 1s 0.4s forwards}
+h1 em{font-style:normal;color:var(--gold)}
+
+.subtitle-jp{font-size:11px;letter-spacing:0.15em;color:rgba(201,168,76,0.4);margin-bottom:12px;opacity:0;animation:fadeUp 1s 0.5s forwards}
+
+.subtitle{font-size:15px;color:rgba(232,213,176,0.65);line-height:1.8;max-width:540px;margin-bottom:44px;opacity:0;animation:fadeUp 1s 0.6s forwards;font-style:italic}
+
+.ink-line{width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0.2;margin:36px 0}
+
+.section-label{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px;opacity:0.7}
+
+.skills-grid{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:40px}
+.skill{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:2px;border:1px solid rgba(201,168,76,0.15);background:rgba(201,168,76,0.04);font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.08em;color:rgba(232,213,176,0.8);cursor:default;transition:all 0.3s;opacity:0;transform:translateY(6px);position:relative}
+.skill::before{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width 0.4s}
+.skill:hover{border-color:rgba(201,168,76,0.5);color:var(--gold-light);background:rgba(201,168,76,0.08)}
+.skill:hover::before{width:100%}
+.skill-mark{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:0.6;flex-shrink:0}
+
+.progress-wrap{margin-bottom:40px}
+.progress-item{margin-bottom:18px;opacity:0;animation:fadeUp 0.8s forwards}
+.progress-meta{display:flex;justify-content:space-between;font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.1em;color:rgba(201,168,76,0.6);margin-bottom:7px}
+.progress-track{height:2px;background:rgba(201,168,76,0.08);position:relative}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--crimson),var(--gold));transition:width 2s cubic-bezier(0.4,0,0.2,1);width:0}
+.progress-track::after{content:'▶';position:absolute;right:-8px;top:-5px;font-size:9px;color:var(--gold);opacity:0.5}
+
+.quote-block{border-left:2px solid rgba(201,168,76,0.3);padding:16px 20px;margin:40px 0;opacity:0;animation:fadeUp 1s 1.4s forwards}
+.quote-text{font-style:italic;font-size:14px;color:rgba(232,213,176,0.6);line-height:1.8;margin-bottom:6px}
+.quote-attr{font-family:'Cinzel',serif;font-size:10px;letter-spacing:0.15em;color:rgba(201,168,76,0.4)}
+
+.links{display:flex;gap:12px;flex-wrap:wrap}
+.link-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:0.1em;text-decoration:none;border:1px solid;transition:all 0.3s;position:relative;overflow:hidden}
+.link-btn::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.3s}
+.link-btn.primary{color:var(--gold);border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.06)}
+.link-btn.primary:hover{color:var(--ink);background:var(--gold);border-color:var(--gold)}
+.link-btn.secondary{color:rgba(232,213,176,0.4);border-color:rgba(232,213,176,0.1)}
+.link-btn.secondary:hover{color:rgba(232,213,176,0.7);border-color:rgba(232,213,176,0.25)}
+
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="fog-layer"></div>
+<div class="container">
+  <div class="kanji-accent">幽霊</div>
+
+  <div class="mon">Akash Srinivasan  ·  AI Engineer</div>
+
+  <h1>GenAI <em>Customer Support</em><br>Chatbot</h1>
+  <div class="subtitle-jp">生成AI・顧客支援・対話システム</div>
+  <p class="subtitle">A RAG-powered chatbot grounding GPT-4 responses on live operational KPI data — built not for recognition, but because the work demanded it.</p>
+
+  <div class="quote-block">
+    <div class="quote-text">"The Ghost does what the Samurai cannot. Not for honour — but because the people need it."</div>
+    <div class="quote-attr">— Ghost of Tsushima · the code serves the mission, not the title</div>
+  </div>
+
+  <div class="ink-line"></div>
+  <div class="section-label">Skills forged in this work</div>
+  <div class="skills-grid" id="skills"></div>
+
+  <div class="ink-line"></div>
+  <div class="section-label">Scroll upload — in progress</div>
+  <div class="progress-wrap" id="progs"></div>
+
+  <div class="links">
+    <a class="link-btn primary" href="https://github.com/akashsrinivasan12/genai-customer-support-chatbot">View Repository</a>
+    <a class="link-btn secondary" href="https://linkedin.com/in/akashsrinivasan12">LinkedIn</a>
+  </div>
+</div>
+
+<script>
+const skillData=['Python','OpenAI GPT-4o','LangChain','FAISS','FastAPI','Streamlit','Docker','Azure OpenAI','Supabase','RAG Pipelines'];
+const progData=[
+  {label:'RAG pipeline + vector store',pct:100},
+  {label:'FastAPI backend',pct:100},
+  {label:'Streamlit chat interface',pct:100},
+  {label:'Docker deployment',pct:100},
+];
+const sg=document.getElementById('skills');
+skillData.forEach((s,i)=>{
+  const el=document.createElement('div');
+  el.className='skill';
+  el.innerHTML=`<span class="skill-mark"></span>${s}`;
+  el.style.animationDelay=`${0.8+i*0.07}s`;
+  el.style.animation='fadeUp 0.6s forwards';
+  sg.appendChild(el);
+});
+const pw=document.getElementById('progs');
+progData.forEach((p,i)=>{
+  const d=document.createElement('div');
+  d.className='progress-item';
+  d.style.animationDelay=`${1.2+i*0.15}s`;
+  d.innerHTML=`<div class="progress-meta"><span>${p.label}</span><span>${p.pct}%</span></div><div class="progress-track"><div class="progress-fill" data-w="${p.pct}"></div></div>`;
+  pw.appendChild(d);
+});
+setTimeout(()=>{document.querySelectorAll('.progress-fill').forEach(f=>{f.style.width=f.dataset.w+'%'})},1200);
+
+// Cherry blossom canvas
+const C=document.getElementById('c');
+const ctx=C.getContext('2d');
+let W,H,petals=[];
+const N=55;
+function resize(){W=C.width=innerWidth;H=C.height=innerHeight;if(!petals.length)init()}
+function init(){petals=[];for(let i=0;i<N;i++)petals.push(mkPetal(true))}
+function mkPetal(rand){
+  const y=rand?Math.random()*H:-20;
+  return{x:Math.random()*W,y,r:Math.random()*3+1.5,
+    vx:(Math.random()-.3)*0.6,vy:Math.random()*0.8+0.3,
+    rot:Math.random()*Math.PI*2,vrot:(Math.random()-.5)*0.03,
+    op:Math.random()*0.4+0.15,sw:Math.random()*0.8+0.4,phase:Math.random()*Math.PI*2};
+}
+function drawPetal(p){
+  ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot);
+  ctx.beginPath();
+  ctx.ellipse(0,0,p.r*p.sw,p.r,0,0,Math.PI*2);
+  ctx.fillStyle=`rgba(210,170,140,${p.op})`;
+  ctx.fill();ctx.restore();
+}
+function tick(){
+  ctx.clearRect(0,0,W,H);
+  const t=Date.now()*0.001;
+  petals.forEach(p=>{
+    p.x+=p.vx+Math.sin(t*0.5+p.phase)*0.25;
+    p.y+=p.vy;p.rot+=p.vrot;
+    if(p.y>H+10||p.x<-20||p.x>W+20){Object.assign(p,mkPetal(false));p.x=Math.random()*W}
+    drawPetal(p);
+  });
+  requestAnimationFrame(tick);
+}
+resize();window.addEventListener('resize',resize);tick();
+</script>
+</body>
+</html>
